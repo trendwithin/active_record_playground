@@ -11,7 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150731160426) do
+ActiveRecord::Schema.define(version: 20150731174137) do
+
+  create_table "memories", force: :cascade do |t|
+    t.string   "name"
+    t.string   "keywords"
+    t.text     "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "memories", ["user_id"], name: "index_memories_on_user_id"
+
+  create_table "memories_taggedwords", id: false, force: :cascade do |t|
+    t.integer  "memory_id"
+    t.integer  "taggedword_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "memories_taggedwords", ["memory_id"], name: "index_memories_taggedwords_on_memory_id"
+  add_index "memories_taggedwords", ["taggedword_id"], name: "index_memories_taggedwords_on_taggedword_id"
+
+  create_table "taggedwords", force: :cascade do |t|
+    t.string   "word"
+    t.integer  "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
